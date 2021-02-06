@@ -10,19 +10,9 @@ use Illuminate\Support\str;
 
 class PostController extends Controller
 {
+    //display all posts
     public function index()
     {
-            // DB::enableQueryLog();
-            // $post=Post::all();
-            // foreach($post as $pos)
-            // {
-            //     foreach($pos->comment as $c)
-            //     {
-            //         dump($c);
-            //     }
-            // }
-            // dd(DB::getQueryLog());
-
         return view('posts.index',[
             'posts'=>Post::all()
         ]);
@@ -31,31 +21,7 @@ class PostController extends Controller
    {
     return view('posts.create');
    } 
-//    public function store(Request $req)
-//    {
-//        $data=$req->validate();
-//        $post=new Post();
-//     $post->title=$req->input('title');
-//     $post->content=$req->input('content');
-//     $post->slug=str::slug($post->title,'-');
-//     $post->active=true;
-//     $post->save();
-//     $req->session()->flash('status','post was created!!');
-//     return redirect('/posts');
-//    }
-
-// public function store(StorePost $req)
-// {
-//     $post=new Post();
-//  $post->title=$req->input('title');
-//  $post->content=$req->input('content');
-//  $post->slug=str::slug($post->title,'-');
-//  $post->active=true;
-//  $post->save();
-//  $req->session()->flash('status','post was created!!');
-//  return redirect('/posts');
-// }
-
+//create new post
 public function store(StorePost $req)
 {
     $data=$req->only(['title','content']);
@@ -65,21 +31,21 @@ public function store(StorePost $req)
  $req->session()->flash('status','post was created!!');
  return redirect('/posts');
 }
-
+//show post
    public function show($id)
    {
     return view('posts.show',[
         'post'=>Post::find($id)
     ]);
    } 
-
+//edit post
    public function edit($id)
    {
     return view('posts.edit',[
         'post'=>Post::findorfail($id)
     ]);
    }   
-   
+   //update this post
    public function update(StorePost $req,$id)
    {
     $post=Post::findorfail($id);
@@ -89,7 +55,7 @@ public function store(StorePost $req)
     $req->session()->flash('status','post was updated!!');
     return redirect('/posts');
    } 
-
+//remove this post
    public function destroy(Request $req,$id)
    {
        $post=Post::findOrFail($id);
