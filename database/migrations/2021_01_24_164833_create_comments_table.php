@@ -14,9 +14,8 @@ class CreateCommentsTable extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('post_id')->unique();
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->id();
+            $table->foreignId('post_id')->constrained();
             $table->string('content',120);
             $table->timestamps();
         });
